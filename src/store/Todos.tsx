@@ -22,13 +22,9 @@ export type TodoContext = {
 
 export const TodoProvider = ({ children }: todoproviderprops) => {
   const [todos, setTodos] = useState<Todo[]>(() => {
-    try {
-      const todos = localStorage.getItem("todos") || "[]";
+    const todos = localStorage.getItem("todos") || "[]";
 
-      return JSON.parse(todos) as Todo[];
-    } catch (error) {
-      return [];
-    }
+    return JSON.parse(todos) as Todo[];
   });
 
   function AddToDo(task: string) {
@@ -50,7 +46,7 @@ export const TodoProvider = ({ children }: todoproviderprops) => {
 
   function toggletodo(id: string) {
     setTodos((prev) => {
-      let newTodos = prev.map((todo) => {
+      const newTodos = prev.map((todo) => {
         if (todo.id === id) {
           return { ...todo, completed: !todo.completed };
         }
@@ -64,7 +60,7 @@ export const TodoProvider = ({ children }: todoproviderprops) => {
 
   function handleDelete(id: string) {
     setTodos((prev) => {
-      let newTodos = prev.filter((todo) => todo.id !== id);
+      const newTodos = prev.filter((todo) => todo.id !== id);
       localStorage.setItem("todos", JSON.stringify(newTodos));
 
       return newTodos;
