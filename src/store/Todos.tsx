@@ -21,7 +21,15 @@ export type TodoContext = {
 };
 
 export const TodoProvider = ({ children }: todoproviderprops) => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    try {
+      const todos = localStorage.getItem("todos") || "[]";
+
+      return JSON.parse(todos) as Todo[];
+    } catch (error) {
+      return "error";
+    }
+  });
 
   function AddToDo(task: string) {
     setTodos((prev) => {
@@ -35,26 +43,31 @@ export const TodoProvider = ({ children }: todoproviderprops) => {
         },
       ];
       console.log(newTodos);
+      localStorage.setItem("todos", JSON.stringify(newTodos));
       return newTodos;
     });
   }
 
   function toggletodo(id: string) {
     setTodos((prev) => {
-      let updatedTodos = prev.map((todo) => {
+      let newTodos = prev.map((todo) => {
         if (todo.id === id) {
           return { ...todo, completed: !todo.completed };
         }
         return todo;
       });
-      return updatedTodos;
+      localStorage.setItem("todos", JSON.stringify(newTodos));
+
+      return newTodos;
     });
   }
 
   function handleDelete(id: string) {
     setTodos((prev) => {
-      let newList = prev.filter((todo) => todo.id !== id);
-      return newList;
+      let newTodos = prev.filter((todo) => todo.id !== id);
+      localStorage.setItem("todos", JSON.stringify(newTodos));
+
+      return newTodos;
     });
   }
   return (

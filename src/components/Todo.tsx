@@ -1,13 +1,23 @@
 import React from "react";
 import { useTodos } from "../store/Todos";
+import { useSearchParams } from "react-router";
 
 function Todo() {
   const { todos, toggletodo, handleDelete } = useTodos();
+  const [serachParams] = useSearchParams();
+  const data = serachParams.get("todo");
+  console.log(data, "jai baabe ki");
+  let filterData = todos;
 
-  const filterData = todos;
+  if (data === "pending") {
+    filterData = filterData.filter((todo) => !todo.completed);
+  }
 
+  if (data === "completed") {
+    filterData = filterData.filter((todo) => todo.completed);
+  }
   return (
-    <ul>
+    <ul className="list">
       {filterData.map((todo) => {
         return (
           <li key={todo.id}>
