@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import AddToDo from "../components/AddToDo";
 
 export const todocontext = createContext<TodoContext | null>(null);
 
