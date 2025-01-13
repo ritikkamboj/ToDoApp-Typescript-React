@@ -1,4 +1,3 @@
-import React from "react";
 import AddToDo from "./components/AddToDo";
 import Todo from "./components/Todo";
 import Navbar from "./components/Navbar";

@@ -27,7 +27,7 @@ export const TodoProvider = ({ children }: todoproviderprops) => {
 
       return JSON.parse(todos) as Todo[];
     } catch (error) {
-      return "error";
+      return [];
     }
   });
 
